@@ -3,9 +3,10 @@
 const express = require("express");
 const server = express();
 const port = 7070;
+server.use(express.json());
 
 // Importing Sub-Routes
-const postRoutes = require("../routes/postsRoutes");
+const postRoutes = require("./routes/postsRoutes");
 
 // Using Sub-Routes
 server.use("/posts", postRoutes);
