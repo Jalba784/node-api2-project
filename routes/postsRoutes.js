@@ -44,7 +44,7 @@ router.get("/:id", async (req, res) => {
         message: "The post with the specified ID does not exist."
       });
     } else {
-        return res.status(200).json(specId)
+      return res.status(200).json(specId);
     }
   } catch (err) {
     console.log(`Error => ${err}`);
@@ -54,6 +54,23 @@ router.get("/:id", async (req, res) => {
   }
 });
 // DELETE -> Deletes post
+router.delete("/:id", async (req, res) => {
+  const deleteId = await db.findById(req.params.id);
+  try {
+    if (!deleteId) {
+      return res.status(404).json({
+        message: "The post with the specified ID does not exist."
+      });
+    } else {
+      await db.remove(req.params.id);
+      res.status(200).end();
+    }
+  } catch (err) {
+    res.status(500).json({
+      error: "The post could not be removed"
+    });
+  }
+});
 // PUT -> Updates post
 
 module.exports = router; // Export
