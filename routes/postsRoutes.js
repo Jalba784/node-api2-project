@@ -36,6 +36,23 @@ router.get("/", async (req, res) => {
   }
 });
 // GET -> Returns specific post
+router.get("/:id", async (req, res) => {
+  const specId = await db.findById(req.params.id);
+  try {
+    if (!specId) {
+      return res.status(404).json({
+        message: "The post with the specified ID does not exist."
+      });
+    } else {
+        return res.status(200).json(specId)
+    }
+  } catch (err) {
+    console.log(`Error => ${err}`);
+    res.status(500).json({
+      error: "The post information could not be retrieved."
+    });
+  }
+});
 // DELETE -> Deletes post
 // PUT -> Updates post
 
